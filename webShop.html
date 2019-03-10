@@ -32,7 +32,7 @@
 				z-index: 1000;
 				height: 100vh;
 				width: 100vw;
-				background: url('Pics/bgfirstPage.jpg') no-repeat fixed center;
+				background: url('bgfirstPage.jpg') no-repeat fixed center;
 				background-size: cover;
 				display: grid;
 				grid-template-columns: 200px;
@@ -98,7 +98,7 @@
 			header {
 				display: flex;
 				justify-content: space-between;
-				background: url('Pics/bgfirstPage.jpg') no-repeat fixed 0 -60vh;
+				background: url('bgfirstPage.jpg') no-repeat fixed 0 -60vh;
 				background-size: cover;
 				align-content: center;
 				border-bottom: 1px solid rgb( 209, 132, 94);
@@ -113,6 +113,20 @@
 					box-shadow: 2px 2px 3px rgb( 98, 41, 12), -2px -2px 3px rgb( 98, 41, 12), 
 					-2px 2px 3px rgb( 98, 41, 12), 2px -2px 3px rgb( 98, 41, 12);
 				}
+				#menuExit {
+					position: absolute;
+					top: 46px;
+    				left: 48.8%;
+					font-size: 30px;
+					color: rgb( 242, 216, 139);
+					text-shadow: 1px 1px 2px rgb( 98, 41, 12), -1px -1px 2px rgb( 98, 41, 12), 
+					-1px 1px 2px rgb( 98, 41, 12), 1px -1px 2px rgb( 98, 41, 12);
+					transform: scale(0,0) rotate(0);
+					transition: transform 1s;
+				}
+					#menuExit:hover {
+						cursor: pointer;
+					}
 				#search {
 					margin-right: 5vw;
 					align-self: center;
@@ -142,7 +156,7 @@
 			#menu {
 				height: 80vh;
 				width: 100%;
-				background: url('Pics/menuBckg.jpg') no-repeat fixed 0 9vh;
+				background: url('menuBckg.jpg') no-repeat fixed 0 9vh;
 				display: grid;
 				grid-template-columns: 33vw 34vw 33vw;
 				grid-template-rows: 1fr 1fr;
@@ -201,32 +215,32 @@
 						z-index: 100;
 					}
 				#menu .menuPics:nth-child(1) {
-					background: url("Pics/gpu.jpg") no-repeat;
+					background: url("gpu.jpg") no-repeat;
 					background-position: center;
 					background-size: cover;
 				}
         		#menu .menuPics:nth-child(2) {
-					background: url("Pics/cpu.jpg") no-repeat;
+					background: url("cpu.jpg") no-repeat;
 					background-position: center;
 					background-size: cover;
                 }
                 #menu .menuPics:nth-child(3) {
-					background: url("Pics/mbd.jpg") no-repeat;
+					background: url("mbd.jpg") no-repeat;
 					background-position: center;
 					background-size: cover;
                 }
                 #menu .menuPics:nth-child(4) {
-					background: url("Pics/hdd.jpg") no-repeat;
+					background: url("hdd.jpg") no-repeat;
 					background-position: center;
 					background-size: cover;
                 }
                 #menu .menuPics:nth-child(5) {
-					background: url("Pics/ram.jpg") no-repeat;
+					background: url("ram.jpg") no-repeat;
 					background-position: center;
 					background-size: cover;
                 }
                 #menu .menuPics:nth-child(6) {
-					background: url("Pics/ssd.jpg") no-repeat;
+					background: url("ssd.jpg") no-repeat;
 					background-position: center;
 					background-size: cover;
                 }
@@ -291,7 +305,8 @@
 			</div>
 			<div id="mainMenu">
 				<header>
-					<img src="Pics/logo.jpg" alt="logo">
+					<img src="logo.jpg" alt="logo">
+					<div id="menuExit"><i class="fas fa-times"></i></div>
 					<div  id="search">
 						<input id="searchInput" type="text" placeholder="Search">
 						<i class="fas fa-search"></i>
@@ -397,7 +412,7 @@
 			ram: [],
 			sdd: []
 		}
-		var gpu1 = new Proizvod("Pics/asusHeroX.jpg", "nvidia 1070", 40000, 256347);
+		var gpu1 = new Proizvod("asusHeroX.jpg", "nvidia 1070", 40000, 256347);
 		proizvodi.gpu.push(gpu1);
 		var gpu2 = new Proizvod("afhgd", "nvidia 2080 ti", 110000, 723431);
 		proizvodi.gpu.push(gpu2);
@@ -408,6 +423,9 @@
 		var menuPics = document.querySelectorAll('.menuPics');
 		var section = document.querySelectorAll('section');
 		var products = document.querySelectorAll('.products');
+		var menuX = document.getElementById('menuExit');
+		var menuXOpen = false;
+
 		begin.addEventListener('click', function(){
 			mainMenu.style.display = 'grid';
 			firstPage.style.opacity = '0';
@@ -415,13 +433,29 @@
 				firstPage.style.display = 'none'
 			}, 1000);
 		});
+		
+		
 		for (let i=0; i<menuPics.length; i++){
 			menuPics[i].addEventListener('click', function(){
 				section[i].style.display = 'grid';
 				section[i].style.left = '0';
+				menuXOpen = true;
+				console.log(menuXOpen, menuX, section[i].style.left);
 			});
 		}
-
+		window.addEventListener('click', function(){
+			if (menuXOpen)
+				menuX.style.transform = 'scale(1,1) rotate(90deg)';
+			else 
+				menuX.style.transform = 'scale(0,0) rotate(0deg)';
+		});
+		menuX.addEventListener('click', function(){
+			for (let i=0; i<menuPics.length; i++){
+				section[i].style.left = '100%';
+				// section[i].style.display = 'none';
+			}
+			menuXOpen = false;
+		});
 	
 		var elementiGpu = [];
 		for (var i=0; i<proizvodi.gpu.length; i++){
@@ -446,5 +480,6 @@
 			products[0].appendChild(elementiGpu[i]);
 		}
 
+		
 	</script>
 </html>
